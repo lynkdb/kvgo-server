@@ -1,0 +1,33 @@
+# Storage Settings
+[storage]
+
+data_directory = /opt/lynkdb/kvgo-server/var/data
+
+
+# Server Settings
+[server]
+
+bind = 0.0.0.0:9100
+
+auth_secret_key = change_this_server_auth_secret_key
+
+
+# Performance Settings
+[performance]
+
+write_buffer_size = 8
+
+block_cache_size = 32
+
+max_table_size = 8
+
+max_open_files = 500
+
+
+# Cluster Settings
+[cluster]
+
+# masters = 127.0.0.31:9100,127.0.0.32:9100,127.0.0.33:9100
+
+# auth_secret_key = change_this_cluster_auth_secret_key
+
