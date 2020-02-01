@@ -15,13 +15,12 @@
 package config
 
 import (
-	"errors"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
 
-	"github.com/hooto/hini4g/hini"
+	"github.com/BurntSushi/toml"
 	"github.com/lessos/lessgo/crypto/idhash"
 
 	"github.com/lynkdb/kvgo"
@@ -46,7 +45,8 @@ func Setup(ver, rel string) error {
 	}
 
 	file := Prefix + "/etc/kvgo-server.conf"
-	opts, optErr := hini.ParseFile(file)
+
+	optErr := configDecodeFile(file, &ConfigData)
 
 	if os.IsNotExist(optErr) {
 
@@ -85,7 +85,7 @@ func Setup(ver, rel string) error {
 		fpo.Close()
 
 		if err == nil {
-			opts, err = hini.ParseFile(file)
+			optErr = configDecodeFile(file, &ConfigData)
 		}
 
 		optErr = err
@@ -95,57 +95,41 @@ func Setup(ver, rel string) error {
 		return optErr
 	}
 
-	return dataSetup(opts)
+	if ConfigData.Storage.DataDirectory == "" {
+		ConfigData.Storage.DataDirectory = Prefix + "/var/data"
+	}
+
+	fpo, err := os.OpenFile(file+".toml", os.O_RDWR|os.O_CREATE, 0644)
+	if err != nil {
+		return err
+	}
+	fpo.Seek(0, 0)
+	fpo.Truncate(0)
+	defer fpo.Close()
+
+	enc := toml.NewEncoder(fpo)
+	if err := enc.Encode(ConfigData); err != nil {
+		return err
+	}
+
+	return nil
 }
 
-func dataSetup(opts *hini.Options) error {
+func configDecodeFile(file string, obj interface{}) error {
 
-	{
-		if v, ok := opts.ValueOK("storage/data_directory"); ok {
-			ConfigData.StorageDataDirectory = v.String()
-		} else {
-			ConfigData.StorageDataDirectory = Prefix + "/var/data"
-		}
+	fp, err := os.Open(file)
+	if err != nil {
+		return err
+	}
+	defer fp.Close()
+
+	bs, err := ioutil.ReadAll(fp)
+	if err != nil {
+		return err
 	}
 
-	{
-		if v, ok := opts.ValueOK("server/bind"); ok {
-			ConfigData.ServerBind = v.String()
-		} else {
-			return errors.New("no server/bind found")
-		}
-
-		if v, ok := opts.ValueOK("server/auth_secret_key"); ok {
-			ConfigData.ServerAuthSecretKey = v.String()
-		}
-	}
-
-	{
-		if v, ok := opts.ValueOK("performance/write_buffer_size"); ok {
-			ConfigData.PerformanceWriteBufferSize = v.Int()
-		}
-
-		if v, ok := opts.ValueOK("performance/block_cache_size"); ok {
-			ConfigData.PerformanceBlockCacheSize = v.Int()
-		}
-
-		if v, ok := opts.ValueOK("performance/max_table_size"); ok {
-			ConfigData.PerformanceMaxTableSize = v.Int()
-		}
-
-		if v, ok := opts.ValueOK("performance/max_open_files"); ok {
-			ConfigData.PerformanceMaxOpenFiles = v.Int()
-		}
-	}
-
-	{
-		if v, ok := opts.ValueOK("cluster/masters"); ok {
-			ConfigData.ClusterMasters = strings.Split(v.String(), ",")
-		}
-
-		if v, ok := opts.ValueOK("cluster/auth_secret_key"); ok {
-			ConfigData.ClusterAuthSecretKey = v.String()
-		}
+	if _, err := toml.Decode(string(bs), obj); err != nil {
+		return err
 	}
 
 	return nil

@@ -3,8 +3,8 @@ Description=kvgo-server
 After=network.target
 
 [Service]
-User=kvgo-server
-Group=kvgo-server
+User=kvgo
+Group=kvgo
 Type=simple
 LimitNOFILE=4096
 ExecStart=/opt/lynkdb/kvgo-server/bin/kvgo-server -log_dir /opt/lynkdb/kvgo-server/var/log -minloglevel 1 -logtolevel true

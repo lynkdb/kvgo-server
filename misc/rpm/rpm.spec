@@ -1,5 +1,5 @@
 %define app_home /opt/lynkdb/kvgo-server
-%define app_user kvgo-server
+%define app_user kvgo
 
 Name: kvgo-server
 Version: __version__
@@ -49,7 +49,7 @@ systemctl daemon-reload
 %postun
 
 %files
-%defattr(-,kvgo-server,kvgo-server,-)
+%defattr(-,kvgo,kvgo,-)
 %dir %{app_home}
 /lib/systemd/system/kvgo-server.service
 
