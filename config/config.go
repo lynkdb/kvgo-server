@@ -20,7 +20,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/BurntSushi/toml"
+	"github.com/hooto/hconf4g/hconf"
 	"github.com/lessos/lessgo/crypto/idhash"
 
 	"github.com/lynkdb/kvgo"
@@ -33,6 +33,7 @@ var (
 	Prefix     = ""
 	err        error
 	ConfigData kvgo.Config
+	confFile   = ""
 )
 
 func Setup(ver, rel string) error {
@@ -44,9 +45,9 @@ func Setup(ver, rel string) error {
 		Prefix = "/opt/lynkdb/" + AppName
 	}
 
-	file := Prefix + "/etc/kvgo-server.conf"
+	confFile = Prefix + "/etc/kvgo-server.conf"
 
-	optErr := configDecodeFile(file, &ConfigData)
+	optErr := hconf.DecodeFromFile(&ConfigData, confFile)
 
 	if os.IsNotExist(optErr) {
 
@@ -72,7 +73,7 @@ func Setup(ver, rel string) error {
 
 		//
 		os.MkdirAll(Prefix+"/etc", 0755)
-		fpo, err := os.OpenFile(file, os.O_RDWR|os.O_CREATE, 0644)
+		fpo, err := os.OpenFile(confFile, os.O_RDWR|os.O_CREATE, 0644)
 		if err != nil {
 			return err
 		}
@@ -85,7 +86,7 @@ func Setup(ver, rel string) error {
 		fpo.Close()
 
 		if err == nil {
-			optErr = configDecodeFile(file, &ConfigData)
+			optErr = hconf.DecodeFromFile(&ConfigData, confFile)
 		}
 
 		optErr = err
@@ -97,39 +98,6 @@ func Setup(ver, rel string) error {
 
 	if ConfigData.Storage.DataDirectory == "" {
 		ConfigData.Storage.DataDirectory = Prefix + "/var/data"
-	}
-
-	fpo, err := os.OpenFile(file+".toml", os.O_RDWR|os.O_CREATE, 0644)
-	if err != nil {
-		return err
-	}
-	fpo.Seek(0, 0)
-	fpo.Truncate(0)
-	defer fpo.Close()
-
-	enc := toml.NewEncoder(fpo)
-	if err := enc.Encode(ConfigData); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func configDecodeFile(file string, obj interface{}) error {
-
-	fp, err := os.Open(file)
-	if err != nil {
-		return err
-	}
-	defer fp.Close()
-
-	bs, err := ioutil.ReadAll(fp)
-	if err != nil {
-		return err
-	}
-
-	if _, err := toml.Decode(string(bs), obj); err != nil {
-		return err
 	}
 
 	return nil
