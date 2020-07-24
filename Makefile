@@ -15,7 +15,8 @@ install:
 	mkdir -p ${APP_HOME}/var/data
 	cp -rp misc ${APP_HOME}/ 
 	install -m 755 ${EXE_SERVER} ${APP_HOME}/${EXE_SERVER}
-	id -u ${APP_USER} &>/dev/null || useradd -d ${APP_HOME} -s /sbin/nologin ${APP_USER}
+	# id -u ${APP_USER} &>/dev/null || useradd -d ${APP_HOME} -s /sbin/nologin ${APP_USER}
+	id -u ${APP_USER} || useradd -d ${APP_HOME} -s /sbin/nologin ${APP_USER}
 	chown -R ${APP_USER}:${APP_USER} ${APP_HOME}
 	install -m 600 misc/systemd/systemd.service /lib/systemd/system/kvgo-server.service
 	systemctl daemon-reload

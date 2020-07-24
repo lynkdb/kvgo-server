@@ -25,6 +25,11 @@ var (
 )
 
 func Setup() error {
+
 	Data, err = kvgo.Open(config.ConfigData)
-	return err
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

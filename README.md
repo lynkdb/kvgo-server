@@ -8,7 +8,8 @@ kvgo-server is the cluster mode that based on [kvgo](https://github.com/lynkdb/k
 * fast and persistent key-value storage engine based on [goleveldb](github.com/syndtr/goleveldb).
 * data is stored sorted by key, forward and backward query is supported over the data.
 * data is automatically compressed using the snappy.
-* support paxos-based distributed deployment and provide service via gRPC
+* support paxos-based distributed deployment and provide service via gRPC.
+* support mount a kvgo-server as a FUSE filesystem [kvgo-fs-mount](https://github.com/lynkdb/kvgo-fs-mount).
 
 ## Getting Started
 

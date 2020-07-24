@@ -18,6 +18,7 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 
 	"github.com/hooto/hlog4g/hlog"
 
@@ -54,6 +55,9 @@ func main() {
 		syscall.SIGQUIT,
 		syscall.SIGKILL)
 	sg := <-quit
+
+	data.Data.Close()
+	time.Sleep(1e9)
 
 	hlog.Printf("warn", "kvgo-server signal quit %s", sg.String())
 	hlog.Flush()

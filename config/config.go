@@ -20,7 +20,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/hooto/hconf4g/hconf"
+	"github.com/hooto/htoml4g/htoml"
 	"github.com/lessos/lessgo/crypto/idhash"
 
 	"github.com/lynkdb/kvgo"
@@ -32,8 +32,8 @@ var (
 	AppName    = "kvgo-server"
 	Prefix     = ""
 	err        error
-	ConfigData kvgo.Config
 	confFile   = ""
+	ConfigData kvgo.Config
 )
 
 func Setup(ver, rel string) error {
@@ -47,7 +47,7 @@ func Setup(ver, rel string) error {
 
 	confFile = Prefix + "/etc/kvgo-server.conf"
 
-	optErr := hconf.DecodeFromFile(&ConfigData, confFile)
+	optErr := htoml.DecodeFromFile(&ConfigData, confFile)
 
 	if os.IsNotExist(optErr) {
 
@@ -86,7 +86,7 @@ func Setup(ver, rel string) error {
 		fpo.Close()
 
 		if err == nil {
-			optErr = hconf.DecodeFromFile(&ConfigData, confFile)
+			optErr = htoml.DecodeFromFile(&ConfigData, confFile)
 		}
 
 		optErr = err
