@@ -20,6 +20,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/hooto/hauth/go/hauth/v1"
 	"github.com/hooto/htoml4g/htoml"
 	"github.com/lessos/lessgo/crypto/idhash"
 
@@ -27,13 +28,13 @@ import (
 )
 
 var (
-	version    = "0.9.0"
-	release    = "1"
-	AppName    = "kvgo-server"
-	Prefix     = ""
-	err        error
-	confFile   = ""
-	ConfigData kvgo.Config
+	version  = "0.9.0"
+	release  = "1"
+	AppName  = "kvgo-server"
+	Prefix   = ""
+	err      error
+	confFile = ""
+	Config   kvgo.Config
 )
 
 func Setup(ver, rel string) error {
@@ -47,7 +48,10 @@ func Setup(ver, rel string) error {
 
 	confFile = Prefix + "/etc/kvgo-server.conf"
 
-	optErr := htoml.DecodeFromFile(&ConfigData, confFile)
+	var (
+		optErr = htoml.DecodeFromFile(&Config, confFile)
+		flush  = false
+	)
 
 	if os.IsNotExist(optErr) {
 
@@ -86,7 +90,7 @@ func Setup(ver, rel string) error {
 		fpo.Close()
 
 		if err == nil {
-			optErr = htoml.DecodeFromFile(&ConfigData, confFile)
+			optErr = htoml.DecodeFromFile(&Config, confFile)
 		}
 
 		optErr = err
@@ -96,9 +100,25 @@ func Setup(ver, rel string) error {
 		return optErr
 	}
 
-	if ConfigData.Storage.DataDirectory == "" {
-		ConfigData.Storage.DataDirectory = Prefix + "/var/data"
+	if len(Config.ClientAuthKeys) == 0 {
+		ak := hauth.NewAuthKey()
+		ak.AccessKey = "00000000"
+		Config.ClientAuthKeys = append(Config.ClientAuthKeys, ak)
+		flush = true
+	}
+
+	if Config.Storage.DataDirectory == "" {
+		Config.Storage.DataDirectory = Prefix + "/var/data"
+		flush = true
+	}
+
+	if flush {
+		return Flush()
 	}
 
 	return nil
+}
+
+func Flush() error {
+	return htoml.EncodeToFile(Config, confFile, nil)
 }

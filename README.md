@@ -44,7 +44,9 @@ data_directory = "/opt/lynkdb/kvgo-server/var/data"
 # Server Settings
 [server]
 bind = "127.0.0.1:9100"
-auth_secret_key = "the-secret-key-of-server"
+[server.auth_key]
+access_key = "the-key-id"
+secret_key = "the-secret-key-of-server"
 ```
 
 You can modify the default configuration and finally restart the service:
@@ -67,19 +69,27 @@ data_directory = "/opt/lynkdb/kvgo-server/var/data-01"
 
 [server]
 bind = "127.0.0.1:9100"
-auth_secret_key = "the-secret-key-of-server-01"
+[server.auth_key]
+access_key = "the-key-id-01"
+secret_key = "the-secret-key-of-server-01"
 
-[[cluster.masters]]
+[[cluster.main_nodes]]
 addr = "127.0.0.1:9100"
-auth_secret_key = "the-secret-key-of-server-01"
+[cluster.main_nodes.auth_key]
+access_key = "the-key-id-01"
+secret_key = "the-secret-key-of-server-01"
 
-[[cluster.masters]]
+[[cluster.main_nodes]]
 addr = "127.0.0.2:9100"
-auth_secret_key = "the-secret-key-of-server-02"
+[cluster.main_nodes.auth_key]
+access_key = "the-key-id-02"
+secret_key = "the-secret-key-of-server-02"
 
-[[cluster.masters]]
+[[cluster.main_nodes]]
 addr = "127.0.0.3:9100"
-auth_secret_key = "the-secret-key-of-server-03"
+[cluster.main_nodes.auth_key]
+access_key = "the-key-id-03"
+secret_key = "the-secret-key-of-server-03"
 ```
 
 # server-02
@@ -89,19 +99,27 @@ data_directory = "/opt/lynkdb/kvgo-server/var/data-02"
 
 [server]
 bind = "127.0.0.2:9100"
-auth_secret_key = "the-secret-key-of-server-02"
+[server.auth_key]
+access_key = "the-key-id-02"
+secret_key = "the-secret-key-of-server-02"
 
-[[cluster.masters]]
+[[cluster.main_nodes]]
 addr = "127.0.0.1:9100"
-auth_secret_key = "the-secret-key-of-server-01"
+[cluster.main_nodes.main_nodes.auth_key]
+access_key = "the-key-id-01"
+secret_key = "the-secret-key-of-server-01"
 
-[[cluster.masters]]
+[[cluster.main_nodes]]
 addr = "127.0.0.2:9100"
-auth_secret_key = "the-secret-key-of-server-02"
+[cluster.main_nodes.auth_key]
+access_key = "the-key-id-02"
+secret_key = "the-secret-key-of-server-02"
 
-[[cluster.masters]]
+[[cluster.main_nodes]]
 addr = "127.0.0.3:9100"
-auth_secret_key = "the-secret-key-of-server-03"
+[cluster.main_nodes.auth_key]
+access_key = "the-key-id-03"
+secret_key = "the-secret-key-of-server-03"
 ```
 
 # server-03
@@ -111,19 +129,29 @@ data_directory = "/opt/lynkdb/kvgo-server/var/data-03"
 
 [server]
 bind = "127.0.0.3:9100"
-auth_secret_key = "the-secret-key-of-server-03"
+[server.auth_key]
+access_key = "the-key-id-03"
+secret_key = "the-secret-key-of-server-03"
 
-[[cluster.masters]]
+[[cluster.main_nodes]]
 addr = "127.0.0.1:9100"
-auth_secret_key = "the-secret-key-of-server-01"
+[cluster.main_nodes.auth_key]
+access_key = "the-key-id-01"
+secret_key = "the-secret-key-of-server-01"
 
-[[cluster.masters]]
+[[cluster.main_nodes]]
+[server.auth_key]
 addr = "127.0.0.2:9100"
-auth_secret_key = "the-secret-key-of-server-02"
+[cluster.main_nodes.auth_key]
+access_key = "the-key-id-02"
+secret_key = "the-secret-key-of-server-02"
 
-[[cluster.masters]]
+[[cluster.main_nodes]]
+[server.auth_key]
 addr = "127.0.0.3:9100"
-auth_secret_key = "the-secret-key-of-server-03"
+[cluster.main_nodes.auth_key]
+access_key = "the-key-id-03"
+secret_key = "the-secret-key-of-server-03"
 ```
 
 ## Improve Performance
