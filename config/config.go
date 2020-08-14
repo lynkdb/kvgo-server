@@ -15,26 +15,22 @@
 package config
 
 import (
-	"io/ioutil"
 	"os"
 	"path/filepath"
-	"strings"
 
-	"github.com/hooto/hauth/go/hauth/v1"
 	"github.com/hooto/htoml4g/htoml"
-	"github.com/lessos/lessgo/crypto/idhash"
 
 	"github.com/lynkdb/kvgo"
 )
 
 var (
-	version  = "0.9.0"
+	version  = "0.9.1"
 	release  = "1"
 	AppName  = "kvgo-server"
 	Prefix   = ""
-	err      error
 	confFile = ""
 	Config   kvgo.Config
+	err      error
 )
 
 func Setup(ver, rel string) error {
@@ -48,77 +44,25 @@ func Setup(ver, rel string) error {
 
 	confFile = Prefix + "/etc/kvgo-server.conf"
 
-	var (
-		optErr = htoml.DecodeFromFile(&Config, confFile)
-		flush  = false
-	)
-
-	if os.IsNotExist(optErr) {
-
-		fp, err := os.Open(Prefix + "/misc/conf/kvgo-server.conf.default")
-		if err != nil {
-			return err
-		}
-		defer fp.Close()
-
-		bs, err := ioutil.ReadAll(fp)
-		if err != nil {
-			return err
-		}
-
-		var (
-			authKey = idhash.RandBase64String(40)
-			cfgStr  = string(bs)
-		)
-		cfgStr = strings.Replace(cfgStr,
-			"change_this_server_auth_secret_key", authKey, -1)
-		cfgStr = strings.Replace(cfgStr,
-			"change_this_cluster_auth_secret_key", authKey, -1)
-
-		//
-		os.MkdirAll(Prefix+"/etc", 0755)
-		fpo, err := os.OpenFile(confFile, os.O_RDWR|os.O_CREATE, 0644)
-		if err != nil {
-			return err
-		}
-		fpo.Seek(0, 0)
-		fpo.Truncate(0)
-
-		if _, err = fpo.Write([]byte(cfgStr)); err == nil {
-			err = fpo.Sync()
-		}
-		fpo.Close()
-
-		if err == nil {
-			optErr = htoml.DecodeFromFile(&Config, confFile)
-		}
-
-		optErr = err
+	err = htoml.DecodeFromFile(&Config, confFile)
+	if err != nil && !os.IsNotExist(err) {
+		return err
 	}
 
-	if optErr != nil {
-		return optErr
-	}
-
-	if len(Config.ClientAuthKeys) == 0 {
-		ak := hauth.NewAuthKey()
-		ak.AccessKey = "00000000"
-		Config.ClientAuthKeys = append(Config.ClientAuthKeys, ak)
-		flush = true
+	if Config.Server.Bind == "" {
+		Config.Server.Bind = "127.0.0.1:9200"
 	}
 
 	if Config.Storage.DataDirectory == "" {
 		Config.Storage.DataDirectory = Prefix + "/var/data"
-		flush = true
 	}
 
-	if flush {
-		return Flush()
-	}
+	Config.Reset()
 
-	return nil
+	return Flush()
 }
 
 func Flush() error {
+
 	return htoml.EncodeToFile(Config, confFile, nil)
 }
