@@ -6,10 +6,11 @@ data_directory = "/opt/lynkdb/kvgo-server/var/data"
 
 # Server Settings
 [server]
-
 bind = "127.0.0.1:9100"
 
-auth_secret_key = "change_this_server_auth_secret_key"
+[server.access_key]
+id = "<access_key_id>"
+secret = "<access_key_secret>"
 
 
 # Performance Settings
@@ -30,11 +31,15 @@ max_open_files = 500
 # Cluster Settings
 [cluster]
 
-# [[cluster.masters]]
+# [[cluster.main_nodes]]
 # addr = "127.0.0.31:9101"
-# auth_secret_key = "change_this_cluster_auth_secret_key"
- 
-# [[cluster.masters]]
+# [cluster.main_nodes.access_key]
+# id = "<access_key_id>"
+# secret = "<access_key_secret>"
+#
+# [[cluster.main_nodes]]
 # addr = "127.0.0.32:9101"
-# auth_secret_key = "change_this_cluster_auth_secret_key"
+# [cluster.main_nodes.access_key]
+# id = "<access_key_id>"
+# secret = "<access_key_secret>"
 
