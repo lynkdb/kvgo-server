@@ -15,6 +15,9 @@
 package main
 
 import (
+	"fmt"
+	"net/http"
+	_ "net/http/pprof"
 	"os"
 	"os/signal"
 	"syscall"
@@ -43,6 +46,13 @@ func main() {
 		hlog.Printf("warn", "kvgo-server/data/setup err %s", err.Error())
 		hlog.Flush()
 		os.Exit(1)
+	}
+
+	if config.Config.Server.PprofHttpPort > 0 {
+		go http.ListenAndServe(fmt.Sprintf(":%d",
+			config.Config.Server.PprofHttpPort), nil)
+		hlog.Printf("info", "kvgo-server/pprof bind :%d",
+			config.Config.Server.PprofHttpPort)
 	}
 
 	quit := make(chan os.Signal, 2)

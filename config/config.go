@@ -63,6 +63,5 @@ func Setup(ver, rel string) error {
 }
 
 func Flush() error {
-
 	return htoml.EncodeToFile(Config, confFile, nil)
 }
