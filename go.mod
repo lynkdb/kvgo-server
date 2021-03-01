@@ -14,13 +14,13 @@ require (
 	github.com/lessos/lessgo v0.0.0-20201010103753-2e2039a4eb3c // indirect
 	github.com/lynkdb/kvgo v0.0.0-20210226093755-29965a149a12
 	github.com/lynkdb/kvspec v0.0.0-20210226093546-1fff37fc4a33 // indirect
-	github.com/shirou/gopsutil v3.21.1+incompatible // indirect
+	github.com/shirou/gopsutil v3.21.2+incompatible // indirect
 	github.com/stretchr/testify v1.6.1 // indirect
 	github.com/syndtr/goleveldb v1.0.0 // indirect
 	github.com/valuedig/apis v0.0.0-20210208065643-bc2c42de8ec4 // indirect
-	golang.org/x/net v0.0.0-20210224082022-3d97a244fca7 // indirect
-	golang.org/x/sys v0.0.0-20210225134936-a50acf3fe073 // indirect
+	golang.org/x/net v0.0.0-20210226172049-e18ecbb05110 // indirect
+	golang.org/x/sys v0.0.0-20210301091718-77cc2087c03b // indirect
 	golang.org/x/text v0.3.5 // indirect
-	google.golang.org/genproto v0.0.0-20210225212918-ad91960f0274 // indirect
+	google.golang.org/genproto v0.0.0-20210226172003-ab064af71705 // indirect
 	google.golang.org/grpc v1.36.0 // indirect
 )
