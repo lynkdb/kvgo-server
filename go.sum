@@ -62,10 +62,14 @@ github.com/lynkdb/kvgo v0.0.0-20210226093755-29965a149a12 h1:awg4vbMiypndIx6/oBM
 github.com/lynkdb/kvgo v0.0.0-20210226093755-29965a149a12/go.mod h1:s6lmYRESBZlpXdgY2y/uMtXkJ3VoWXzes7YC/D2ixLY=
 github.com/lynkdb/kvgo v0.0.0-20210301122746-76627e216830 h1:YBaziKdK8PKbxiQkMpfYxZTpLPpmuG2YL+5zVlwaAnQ=
 github.com/lynkdb/kvgo v0.0.0-20210301122746-76627e216830/go.mod h1:s6lmYRESBZlpXdgY2y/uMtXkJ3VoWXzes7YC/D2ixLY=
+github.com/lynkdb/kvgo v0.0.0-20210327075407-094a966e5695 h1:XYaOk3fwkJtbn3eF9Q/JVe+T736KsIsXUJ9Dg2b6pIY=
+github.com/lynkdb/kvgo v0.0.0-20210327075407-094a966e5695/go.mod h1:s6lmYRESBZlpXdgY2y/uMtXkJ3VoWXzes7YC/D2ixLY=
 github.com/lynkdb/kvspec v0.0.0-20210204133110-7824ed9d44ef h1:W3q8Ou1RT+Ish9jpUszmhgxlbokSQ8epyQvyr3n4Sys=
 github.com/lynkdb/kvspec v0.0.0-20210204133110-7824ed9d44ef/go.mod h1:Bl0QWwijqs3dNxfWK3l+jojrNMxV0V76NBqjw/ldtPo=
 github.com/lynkdb/kvspec v0.0.0-20210226093546-1fff37fc4a33 h1:eoa2kZzYObCLijIcMYFnOIZxQm6ZVdJRRe4EIV3TvQ8=
 github.com/lynkdb/kvspec v0.0.0-20210226093546-1fff37fc4a33/go.mod h1:Bl0QWwijqs3dNxfWK3l+jojrNMxV0V76NBqjw/ldtPo=
+github.com/lynkdb/kvspec v0.0.0-20210327075221-2c511e8eb299 h1:d4IPVuYLkkJcZ8pVR6hZcOUB70VdRufNW12wXMmuPDs=
+github.com/lynkdb/kvspec v0.0.0-20210327075221-2c511e8eb299/go.mod h1:Bl0QWwijqs3dNxfWK3l+jojrNMxV0V76NBqjw/ldtPo=
 github.com/onsi/ginkgo v1.6.0/go.mod h1:lLunBs/Ym6LB5Z9jYTR76FiuTmxDTDusOGeTQH+WWjE=
 github.com/onsi/ginkgo v1.7.0 h1:WSHQ+IS43OoUrWtD1/bbclrwK8TTH5hzp+umCiuxHgs=
 github.com/onsi/ginkgo v1.7.0/go.mod h1:lLunBs/Ym6LB5Z9jYTR76FiuTmxDTDusOGeTQH+WWjE=
