@@ -12,8 +12,8 @@ require (
 	github.com/hooto/hlog4g v0.0.0-20210209123645-d070995e647f
 	github.com/hooto/htoml4g v0.0.0-20200928123528-226e1ac698c9
 	github.com/lessos/lessgo v0.0.0-20201010103753-2e2039a4eb3c // indirect
-	github.com/lynkdb/kvgo v0.0.0-20210327075407-094a966e5695 // indirect
-	github.com/lynkdb/kvspec v0.0.0-20210327075221-2c511e8eb299 // indirect
+	github.com/lynkdb/kvgo v0.0.0-20210424125153-27dd5e9d1b72 // indirect
+	github.com/lynkdb/kvspec v0.0.0-20210331052015-0e83f61b8a4d // indirect
 	github.com/shirou/gopsutil v3.21.2+incompatible // indirect
 	github.com/stretchr/testify v1.6.1 // indirect
 	github.com/syndtr/goleveldb v1.0.0 // indirect
