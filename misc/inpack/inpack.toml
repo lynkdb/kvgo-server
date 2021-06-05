@@ -1,6 +1,6 @@
 [project]
 name = "kvgo-server"
-version = "0.9.4"
+version = "0.9.6"
 vendor = "lynkdb.com"
 homepage = "https://github.com/lynkdb/kvgo-server"
 groups = ["dev/sys-srv"]
