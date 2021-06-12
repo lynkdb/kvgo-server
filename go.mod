@@ -11,13 +11,13 @@ require (
 	github.com/hooto/hlog4g v0.0.0-20210209123645-d070995e647f
 	github.com/hooto/htoml4g v0.0.0-20200928123528-226e1ac698c9
 	github.com/lessos/lessgo v0.0.0-20201010103753-2e2039a4eb3c // indirect
-	github.com/lynkdb/kvgo v0.0.0-20210605124221-58a0b8596a0f
+	github.com/lynkdb/kvgo v0.0.0-20210612020948-44e8e4c6750a
 	github.com/lynkdb/kvspec v0.0.0-20210612140402-cea9ecd144fc // indirect
 	github.com/shirou/gopsutil v3.21.5+incompatible // indirect
 	github.com/stretchr/testify v1.6.1 // indirect
 	github.com/syndtr/goleveldb v1.0.0 // indirect
 	github.com/valuedig/apis v0.0.0-20210208065643-bc2c42de8ec4 // indirect
-	golang.org/x/net v0.0.0-20210525063256-abc453219eb5 // indirect
-	golang.org/x/sys v0.0.0-20210603125802-9665404d3644 // indirect
-	google.golang.org/genproto v0.0.0-20210604141403-392c879c8b08 // indirect
+	golang.org/x/net v0.0.0-20210610132358-84b48f89b13b // indirect
+	golang.org/x/sys v0.0.0-20210611083646-a4fc73990273 // indirect
+	google.golang.org/genproto v0.0.0-20210611144927-798beca9d670 // indirect
 )
