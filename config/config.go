@@ -24,7 +24,7 @@ import (
 )
 
 var (
-	version  = "0.9.6"
+	version  = "0.9.7"
 	release  = "1"
 	AppName  = "kvgo-server"
 	Prefix   = ""
