@@ -44,7 +44,7 @@ func Setup(ver, rel string) error {
 
 	confFile = Prefix + "/etc/kvgo-server.conf"
 
-	err = htoml.DecodeFromFile(&Config, confFile)
+	err = htoml.DecodeFromFile(confFile, &Config)
 	if err != nil && !os.IsNotExist(err) {
 		return err
 	}

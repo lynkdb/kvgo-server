@@ -48,6 +48,8 @@ func main() {
 		os.Exit(1)
 	}
 
+	config.Flush()
+
 	if config.Config.Server.PprofHttpPort > 0 {
 		go http.ListenAndServe(fmt.Sprintf(":%d",
 			config.Config.Server.PprofHttpPort), nil)
