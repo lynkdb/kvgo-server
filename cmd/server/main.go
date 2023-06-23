@@ -24,6 +24,7 @@ import (
 	"time"
 
 	"github.com/hooto/hlog4g/hlog"
+	"github.com/hooto/hmetrics"
 
 	"github.com/lynkdb/kvgo-server/config"
 	"github.com/lynkdb/kvgo-server/data"
@@ -50,11 +51,23 @@ func main() {
 
 	config.Flush()
 
-	if config.Config.Server.PprofHttpPort > 0 {
-		go http.ListenAndServe(fmt.Sprintf(":%d",
-			config.Config.Server.PprofHttpPort), nil)
-		hlog.Printf("info", "kvgo-server/pprof bind :%d",
-			config.Config.Server.PprofHttpPort)
+	if config.Config.Server.HttpPort > 0 &&
+		(config.Config.Server.PprofEnable || config.Config.Server.MetricsEnable) {
+
+		if config.Config.Server.MetricsEnable {
+			http.HandleFunc("/metrics", hmetrics.HttpHandler)
+		}
+
+		ln, err := net.Listen("tcp", fmt.Sprintf(":%d", cfg.Server.HttpPort))
+		if err != nil {
+			hlog.Printf("warn", "http listen err %s", err.Error())
+			hlog.Flush()
+			os.Exit(1)
+		}
+		go http.Serve(ln, nil)
+
+		hlog.Printf("info", "kvgo-server http listen :%d ok",
+			config.Config.Server.HttpPort)
 	}
 
 	quit := make(chan os.Signal, 2)
