@@ -16,6 +16,7 @@ package main
 
 import (
 	"fmt"
+	"net"
 	"net/http"
 	_ "net/http/pprof"
 	"os"
@@ -58,7 +59,7 @@ func main() {
 			http.HandleFunc("/metrics", hmetrics.HttpHandler)
 		}
 
-		ln, err := net.Listen("tcp", fmt.Sprintf(":%d", cfg.Server.HttpPort))
+		ln, err := net.Listen("tcp", fmt.Sprintf(":%d", config.Config.Server.HttpPort))
 		if err != nil {
 			hlog.Printf("warn", "http listen err %s", err.Error())
 			hlog.Flush()
